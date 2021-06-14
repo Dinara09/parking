@@ -19,8 +19,12 @@
                 @endforeach
             </select></p>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="isParkedCar" id="isParkedCar" value="isParked">
-            <label class="form-check-label" for="isParkedCar">Отметить, если машина на парковке</label>
+            <input class="form-check-input" type="radio" name="parked" id="isParked" value="isParked">
+            <label class="form-check-label" for="isParked">Поставить на стоянку</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="parked" id="notParked" value="notParked">
+            <label class="form-check-label" for="notParked">Убрать со стоянки</label>
         </div>
     </form>
     <h1>Все клиенты</h1>
