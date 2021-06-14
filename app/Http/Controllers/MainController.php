@@ -34,9 +34,9 @@ class MainController extends Controller{
     }
 
     public function parking(){
-        $allClients = DB::table('cars')
-            ->join('clients', 'cars.clientId', '=', 'clients.id')
-            ->select('clients.id', 'clients.fullName', 'cars.brand', 'cars.number', 'cars.model', 'cars.id as carId')
+        $allClients = DB::table('clients')
+            ->select('id', 'fullName')
+            ->groupBy('fullName', 'id')
             ->get();
 
         $parkedCars = DB::table('cars')
