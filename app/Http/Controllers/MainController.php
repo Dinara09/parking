@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Clients;
+use App\Models\Car;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use DB;
 
 class MainController extends Controller{
     public function home(){
-        $client = DB::table('cars')
-            ->join('clients', 'cars.clientId', '=', 'clients.id')
-            ->select('clients.id', 'clients.fullName', 'cars.brand', 'cars.number', 'cars.model', 'cars.id as carId')->paginate(15);
+        $client = (new \App\Models\Car)->getClientsAndCars()->paginate(15);
 
         return view('home', ['clients' => $client]);
     }
@@ -20,46 +19,27 @@ class MainController extends Controller{
     }
 
     public function edit($id){
-        $car = DB::table('cars')
-            ->select('brand', 'model', 'bodyColor', 'number', 'isParkedCar', 'clientId', 'id')
-            ->where('id', '=', $id)
-            ->get();
+        $car = (new \App\Models\Car)->getCarById($id);
 
-        $client = DB::table('clients')
-            ->select('fullName', 'telNumber', 'address', 'sex', 'id')
-            ->where('id', '=', $car[0] -> clientId)
-            ->get();
+        $client = (new \App\Models\Client())->getCarById($car[0] -> clientId);
 
         return view('edit',['clients'=>$client, 'cars' => $car]);
     }
 
     public function parking(){
-        $allClients = DB::table('clients')
-            ->select('id', 'fullName')
-            ->groupBy('fullName', 'id')
-            ->get();
+        $allClients = (new \App\Models\Client())->getAllClients();
 
-        $parkedCars = DB::table('cars')
-            ->join('clients', 'cars.clientId', '=', 'clients.id')
-            ->where('cars.isParkedCar', '=', '1')
-            ->select('clients.id', 'clients.fullName', 'cars.brand', 'cars.number', 'cars.model', 'cars.id as carId')
-            ->paginate(15);
+        $parkedCars = (new \App\Models\Car)->getParkedCars();
 
-        $note = DB::table('cars')
-            ->join('clients', 'cars.clientId', '=', 'clients.id')
-//            ->where('clients.id', '=', )
-            ->select('clients.id', 'clients.fullName', 'cars.brand', 'cars.number', 'cars.model', 'cars.id as carId')
-            ->get();
+        $note = (new \App\Models\Car())->getClientsAndCars();
 
         return view('parking', ['parkedCars' => $parkedCars, 'note' => $note,
             'allClients' => $allClients]);
     }
 
-    public function parkingShowClientCars($fullName)
+    public function parkingShowClientCars()
     {
-        $note = DB::table('cars')
-            ->join('clients', 'cars.clientId', '=', 'clients.id')
-            ->select('clients.id', 'clients.fullName', 'cars.brand', 'cars.number', 'cars.model', 'cars.id as carId');
+        $note = (new \App\Models\Client())->getAllClients();
         return view('parking', ['note' => $note]);
     }
 
@@ -87,22 +67,9 @@ class MainController extends Controller{
             $isParkedCar = 0;
         }
 
-        $clientsId = DB::table('clients')->insertGetId([
-            'fullName' => $request->input('name'),
-            'telNumber' => $request->input('telNumber'),
-            'address' => $request->input('address'),
-            'sex' => $sex,
-        ]);
+        $clientsId = (new \App\Models\Client())->addNewData($request, $sex);
 
-        DB::table('cars')->insert([
-            'brand' => $request->input('brand'),
-            'model' => $request->input('model'),
-            'bodyColor' => $request->input('bodyColor'),
-            'number' => $request->input('number'),
-            'isParkedCar' => $isParkedCar,
-            'clientId' => $clientsId
-        ]);
-
+        (new \App\Models\Car())->addNewData($request, $isParkedCar, $clientsId);
 
         return redirect()->route('create');
     }
@@ -115,7 +82,6 @@ class MainController extends Controller{
         $model= $request->input('model');
         $bodyColor = $request->input('bodyColor');
         $number = $request->input('number');
-        $clientId = $request->input('clientId');
 
         if ($request->input('inlineRadioOptions') == 'sexMale') {
             $sex = 0;
@@ -129,32 +95,22 @@ class MainController extends Controller{
             $isParkedCar = 0;
         }
 
-        $carNote = DB::table('cars')
-            ->select('brand', 'model', 'bodyColor', 'number', 'isParkedCar', 'clientId', 'id')
-            ->where('id', '=', $id)
-            ->get();
+        $carNote = (new \App\Models\Car())->getCarById($id);
+        $clientId = $carNote[0] -> clientId;
+        (new \App\Models\Car())->updateData($id, $brand, $model, $bodyColor,
+            $number, $isParkedCar, $id);
 
-        DB::table('cars')
-            ->where('id', $id)
-            ->update(['brand' => $brand,'model' => $model, 'bodyColor' => $bodyColor, 'number' => $number,
-                'isParkedCar' => $isParkedCar, 'clientId' =>  $carNote[0] -> clientId ]);
+        (new \App\Models\Client())->updateData($clientId, $fullName, $telNumber, $address, $sex);
 
-        DB::table('clients')
-            ->where('id', $clientId)
-            ->update(['fullName' => $fullName,'telNumber' => $telNumber, 'address' => $address, 'sex' => $sex]);
-
-
-        return redirect()->route('edit');
-
+        return redirect()->route('edit' , $id);
     }
 
     public function delete($id){
-        $car = DB::table('cars')
-            ->select('*')
-            ->where('id', '=', $id)
-            ->get();
-        DB::table('cars')->where('id', '=', $id)->delete();
-        DB::table('clients')->where('id', '=', '$car -> clientId')->delete();
+        $car = (new \App\Models\Car())->getCarById($id);
+        $clientId = $car[0] -> clientId;
+        (new \App\Models\Car())->deleteData($id);
+        (new \App\Models\Client())->deleteData($clientId);
+
         return redirect()->route('home');
     }
 }

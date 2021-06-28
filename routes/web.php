@@ -18,7 +18,7 @@ Route::get('/', [ MainController::class, 'home' ])->name('home');
 Route::get('/create', [ MainController::class, 'create'])->name('create');
 Route::post('/create/addClient', [ MainController::class, 'createAddClient' ]);
 Route::post('/edit/saveChanges/{id}', [ MainController::class, 'editSaveChanges' ]);
-Route::get('/edit/{id}', [ MainController::class, 'edit' ]);
+Route::get('/edit/{id}', [ MainController::class, 'edit' ])->name('edit');
 Route::get('/delete/{id}', [ MainController::class, 'delete' ]);
 Route::get('/parking', [ MainController::class, 'parking' ]);
 Route::post('/parking/showClientCars', [ MainController::class, 'parkingShowClientCars' ]);
