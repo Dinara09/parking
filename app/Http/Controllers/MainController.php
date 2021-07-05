@@ -113,4 +113,9 @@ class MainController extends Controller{
 
         return redirect()->route('home');
     }
+
+    public function dropDown( $id){
+            $cars = (new \App\Models\Car())->getClientCars($id)->get();
+            return json_encode($cars);
+    }
 }

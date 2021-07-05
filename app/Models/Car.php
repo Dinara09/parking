@@ -54,4 +54,16 @@ class Car extends Model
     {
         return DB::table('cars')->where('id', '=', $clientID)->delete();
     }
+
+    public function getClientCars($id)
+    {
+        //$clientId = htmlspecialchars(trim($clients['id']));
+        //if ($clients->has('clientId')) {
+            // Строка запроса из базы данных
+            return DB::table('cars')
+                ->where('clientId', '=', $id)
+                ->select('id', 'brand', 'model')
+                ->orderBy('model');
+        //}
+    }
 }
