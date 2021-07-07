@@ -23,3 +23,4 @@ Route::get('/delete/{id}', [ MainController::class, 'delete' ]);
 Route::get('/parking', [ MainController::class, 'parking' ]);
 Route::post('/parking/showClientCars', [ MainController::class, 'parkingShowClientCars' ]);
 Route::get('/parking/dropDown/{id}', [ MainController::class, 'dropDown' ]);
+Route::post('/parking/saveChanges', [ MainController::class, 'parkingSaveChanges' ]);

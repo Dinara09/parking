@@ -12,7 +12,6 @@
             </ul>
         </div>
     @endif
-
     <form method="post"  action="/edit/saveChanges/{{$cars[0]-> id}}">
         @csrf
         <input type="text" name="name" placeholder="Введите ФИО..." class="form-control" id="name"

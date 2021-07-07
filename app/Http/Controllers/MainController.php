@@ -83,13 +83,13 @@ class MainController extends Controller{
         $bodyColor = $request->input('bodyColor');
         $number = $request->input('number');
 
-        if ($request->input('inlineRadioOptions') == 'sexMale') {
+        if ($request->input('sex') == 'sexMale') {
             $sex = 0;
         } else {
             $sex = 1;
         }
 
-        if ($request->input('inlineRadioOptions1') == '1') {
+        if ($request->input('isParkedCar') == 'isParked') {
             $isParkedCar = 1;
         } else {
             $isParkedCar = 0;
@@ -98,7 +98,7 @@ class MainController extends Controller{
         $carNote = (new \App\Models\Car())->getCarById($id);
         $clientId = $carNote[0] -> clientId;
         (new \App\Models\Car())->updateData($id, $brand, $model, $bodyColor,
-            $number, $isParkedCar, $id);
+            $number, $isParkedCar, $clientId);
 
         (new \App\Models\Client())->updateData($clientId, $fullName, $telNumber, $address, $sex);
 
@@ -117,5 +117,18 @@ class MainController extends Controller{
     public function dropDown( $id){
             $cars = (new \App\Models\Car())->getClientCars($id)->get();
             return json_encode($cars);
+    }
+
+    public function parkingSaveChanges(Request  $request){
+        $id = $_POST['car'];
+        if ($request->input('parked') == 'isParked') {
+            $isParkedCar = 1;
+        } else {
+            $isParkedCar = 0;
+        }
+        $carNote = (new \App\Models\Car())->getCarById($id);
+        (new \App\Models\Car())->updateData($id, $carNote[0] -> brand, $carNote[0] -> model, $carNote[0] ->
+        bodyColor, $carNote[0] -> number, $isParkedCar, $carNote[0] -> clientId);
+        return redirect()->route('parking' , $id);
     }
 }

@@ -1,47 +1,25 @@
 @extends('header')
 
 @section('content')
-    <form method="post"  action="/parking/showClientCar">
+    <form method="post"  action="/parking/saveChanges">
         @csrf
         <div class="form-group">
-            <!-- Метка поля производителей автомобилей -->
             <label for="name">Выберите клиента:</label>
-            <!-- Раскрывающийся список производителей автомобилей -->
             <select class="form-control" name="client" id="client">
                 <option disabled selected>Выберите из списка</option>
-
-                // Для каждого элемента массива производителей автомобилей...
                 @foreach ( $allClients as $client ) {
-                // Создаем свой элемент раскрывающегося списка
                 <option value = "{{$client -> id}}">{{$client -> fullName}}</option>--}}
                 @endforeach
                 }
             </select>
         </div>
-        <div class="form-group car-select">
-            <!-- Метка поля выбора марки автомобиля -->
-            <label for="name">Марка автомобиля:</label>
-            <!-- Раскрывающийся список выбора марки автомобиля выбранного производителя -->
-            <!-- Изначально список пуст и неактивен -->
-            <!-- Данные в нем появятся полсле выбора производителя -->
+        <div class="form-group">
+            <label for="name">Автомобиль:</label>
             <select class="form-control" name="car" id="car">
                 <option disabled>Выберите автомобиль</option>
             </select>
         </div>
 
-{{--        <p><select size="1">--}}
-{{--                <option disabled>Выберите имя</option>--}}
-{{--                @foreach($allClients as $item)--}}
-{{--                    <option value = "{{$item -> fullName}}">{{$item -> fullName}}</option>--}}
-{{--                @endforeach--}}
-{{--            </select></p>--}}
-{{--        <p><select size="1">--}}
-{{--                <option disabled>Выберите автомобиль</option>--}}
-{{--                @foreach($note as $data)--}}
-{{--                    <option value = "{{$data -> brand, $data -> model}}">--}}
-{{--                        {{$data -> brand, $data -> model}}</option>--}}
-{{--                @endforeach--}}
-{{--            </select></p>--}}
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="parked" id="isParked" value="isParked">
             <label class="form-check-label" for="isParked">Поставить на стоянку</label>
@@ -50,6 +28,8 @@
             <input class="form-check-input" type="radio" name="parked" id="notParked" value="notParked">
             <label class="form-check-label" for="notParked">Убрать со стоянки</label>
         </div>
+
+        <br><button type="submit" class="btn btn-success">Сохранить</button></br>
     </form>
     <h1>Все клиенты</h1>
     <div class="container">
