@@ -1883,42 +1883,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   \*******************************/
 /***/ (() => {
 
-// $(function(){
-//
-//     $('#client').change(function(){
-//         var id = $(this).val();
-//
-//         $('#car').load('parking.php', {id: id}, function(){
-//             console.log("is change");
-//             $('.car-select').fadeIn('slow');
-//         });
-//
-//     });
-//
-// });
-//     $.ajaxSetup({
-//     headers: {
-//     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-// }
-// });
-//     $(document).ready(function () {
-//     $('#client').on('change',function(e) {
-//         var clientId = e.target.value;
-//         $.ajax({
-//             url:"{{ route('subcat') }}",
-//             type:"POST",
-//             data: {
-//                 cat_id: cat_id
-//             },
-//             success:function (data) {
-//                 $('#subcategory').empty();
-//                 $.each(data.subcategories[0].subcategories,function(index,subcategory){
-//                     $('#subcategory').append('<option value="'+subcategory.id+'">'+subcategory.name+'</option>');
-//                 })
-//             }
-//         })
-//     });
-// });
 $(document).ready(function () {
   $('select[name="client"]').on('change', function () {
     var clientId = $(this).val();
@@ -1939,6 +1903,32 @@ $(document).ready(function () {
     } else {
       $('select[name="car"]').empty();
     }
+  });
+});
+var div = document.getElementById('form-wrapper');
+
+function addForm() {
+  console.log("Work");
+  var forms = div.getElementsByClassName('form');
+  var firstForm = forms[0];
+  var formClone = firstForm.cloneNode(true);
+  div.appendChild(formClone);
+}
+
+$('button').on('click', function () {
+  var $form = $('form').eq(0);
+  $form.clone().insertAfter($form);
+});
+$(document).ready(function () {
+  $('#addNewForm').click(function () {
+    var newel = $('.form-wrapper:last').clone();
+    $(newel).insertAfter(".form-wrapper:last");
+  });
+  $('.txt').focus(function () {
+    $(this).css('border-color', 'red');
+  });
+  $('.txt').focusout(function () {
+    $(this).css('border-color', 'initial');
   });
 });
 
