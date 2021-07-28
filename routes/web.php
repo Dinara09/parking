@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,11 +18,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 Route::get('/', [ MainController::class, 'home' ])->name('home');
 Route::get('/create', [ MainController::class, 'create'])->name('create');
-Route::post('/create/addClient', [ MainController::class, 'createAddClient' ]);
-Route::post('/edit/saveChanges/{id}', [ MainController::class, 'editSaveChanges' ]);
-Route::get('/edit/{id}', [ MainController::class, 'edit' ])->name('edit');
+Route::post('/create/addClient', [ ClientController::class, 'createAddClient' ]);
+Route::post('/edit/saveChanges/{id}', [ ClientController::class, 'editSaveChanges' ]);
+Route::get('/edit/{id}', [ ClientController::class, 'edit' ])->name('edit');
 Route::get('/delete/{id}', [ MainController::class, 'delete' ]);
-Route::get('/parking', [ MainController::class, 'parking' ]);
-Route::post('/parking/showClientCars', [ MainController::class, 'parkingShowClientCars' ]);
-Route::get('/parking/dropDown/{id}', [ MainController::class, 'dropDown' ]);
-Route::post('/parking/saveChanges', [ MainController::class, 'parkingSaveChanges' ]);
+Route::get('/parking', [ MainController::class, 'parking' ])->name('parking');;
+Route::post('/parking/showClientCars', [ ClientController::class, 'parkingShowClientCars' ]);
+Route::get('/parking/dropDown/{id}', [ CarController::class, 'dropDown' ]);
+Route::post('/parking/saveChanges', [ CarController::class, 'parkingSaveChanges' ]);
