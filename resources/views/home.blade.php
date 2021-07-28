@@ -20,8 +20,8 @@
                 <td class="text-white" > {{ $item -> fullName }}</td>
                 <td class="text-white" >{{ $item -> brand}} {{$item -> model}}</td>
                 <td class="text-white" >{{ $item -> number}}</td>
-                <td class="text-white" ><a href="/edit/{{ $item-> carId }}"><img src="{{ asset('/public/image/pencil.png')}}"></a></td>
-                <td class="text-white" ><a href="/delete/{{ $item-> carId }}"><img src="{{ asset('/public/image/delete.png')}}"></a></td>
+                <td class="text-white" ><a href="/edit/{{ $item-> carId }}"><img src="{{ asset('/image/pencil.png')}}"></a></td>
+                <td class="text-white" ><a href="/delete/{{ $item-> carId }}"><img src="{{ asset('/image/delete.png')}}"></a></td>
             </tr>
         @endforeach
         </tbody>

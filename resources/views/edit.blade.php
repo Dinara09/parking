@@ -50,10 +50,6 @@
                         {{$cars[0]-> isParkedCar == 1 ? 'checked' : ''}}>
                     <label class="form-check-label" for="isParkedCar">Отметить, если машина на парковке</label>
                 </div>
-                {{--        <br><button type="submit" class="btn btn-success">Сохранить</button></br>--}}
-                <button type="button" id="addNewForm"
-                        onclick="addRow("carForm");">Добавить новую форму</button>
-                <br><a class="btn btn-primary" href="#linkToClientForm">Сохранить</a></br>
             </div>
         </form>
 @endsection

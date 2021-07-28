@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Главная страница</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="{{URL::asset('public/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/app.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('/resources/css/app.css') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
           rel="stylesheet"
