@@ -23,6 +23,20 @@
     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <a class="me-3 py-2 text-white text-decoration-none" href="/create">Создание</a>
         <a class="me-3 py-2 text-white text-decoration-none" href="/parking">Стоянка</a>
+        @guest
+            <a class="me-3 py-2 text-white text-decoration-none" href="/login">Войти</a>
+        @else
+            <a class="me-3 py-2 text-white text-decoration-none" href="{{ route('logout') }}"
+               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                Выйти
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        @endguest
+
     </nav>
 </div>
 <script src="/resources/js/app.js"></script>

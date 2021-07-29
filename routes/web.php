@@ -26,3 +26,13 @@ Route::get('/parking', [ MainController::class, 'parking' ])->name('parking');;
 Route::post('/parking/showClientCars', [ ClientController::class, 'parkingShowClientCars' ]);
 Route::get('/parking/dropDown/{id}', [ CarController::class, 'dropDown' ]);
 Route::post('/parking/saveChanges', [ CarController::class, 'parkingSaveChanges' ]);
+
+Auth::routes();
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
