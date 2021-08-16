@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use Illuminate\Http\Request;
+use function GuzzleHttp\Promise\all;
 
 class ClientController extends Controller
 {
@@ -20,7 +22,7 @@ class ClientController extends Controller
         return view('parking', ['note' => $note]);
     }
 
-    public function createAddClient(Request  $request)
+    public function createAddClient(Request  $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'name' => 'required|min:3',
@@ -38,7 +40,7 @@ class ClientController extends Controller
             $sex = 1;
         }
 
-        if ($request->input('inlineRadioOptions1') == '1') {
+        if ($request->input('isParkedCar') == '1') {
             $isParkedCar = 1;
         } else {
             $isParkedCar = 0;
@@ -47,8 +49,9 @@ class ClientController extends Controller
         $clientsId = (new \App\Models\Client())->addNewData($request, $sex);
 
         (new \App\Models\Car())->addNewData($request, $isParkedCar, $clientsId);
-
-        return redirect()->route('create');
+        return response()->json([
+            'message' => 'Запись создана'
+        ]);
     }
 
     public function editSaveChanges(Request  $request, $id){
@@ -66,7 +69,7 @@ class ClientController extends Controller
             $sex = 1;
         }
 
-        if ($request->input('isParkedCar') == 'isParked') {
+        if ($request->input('isParkedCar') == '1') {
             $isParkedCar = 1;
         } else {
             $isParkedCar = 0;

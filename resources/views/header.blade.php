@@ -8,7 +8,8 @@
     <title>Главная страница</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ asset('/js/app.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('/resources/css/app.css') }}" />
+    <script type="text/javascript" src="{{ asset('/js/index.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
@@ -25,11 +26,8 @@
         <a class="me-3 py-2 text-white text-decoration-none" href="/parking">Стоянка</a>
     </nav>
 </div>
-<script src="/resources/js/app.js"></script>
 <div class="container">
     @yield('content')
 </div>
-
-
 </body>
 </html>

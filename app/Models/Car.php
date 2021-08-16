@@ -32,7 +32,7 @@ class Car extends Model
 
     public function addNewData($request, $isParkedCar, $clientsId)
     {
-        return DB::table('cars')->insert([
+        return DB::table('cars')->insertGetId([
             'brand' => $request->input('brand'),
             'model' => $request->input('model'),
             'bodyColor' => $request->input('bodyColor'),
