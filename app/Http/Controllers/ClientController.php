@@ -82,6 +82,9 @@ class ClientController extends Controller
 
         (new \App\Models\Client())->updateData($clientId, $fullName, $telNumber, $address, $sex);
 
-        return redirect()->route('edit' , $id);
+        return response()->json([
+            'message' => 'Запись обновлена',
+
+        ]);
     }
 }

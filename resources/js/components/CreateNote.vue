@@ -1,5 +1,12 @@
 <template>
     <form v-on:submit.prevent="onSubmit">
+        <p v-if="Object.keys(this.errors).length">
+            <b style="color:red">Пожалуйста исправьте указанные ошибки:</b>
+        <ul>
+            <li v-for="error in this.errors">{{ error }}</li>
+        </ul>
+        </p>
+
         <input v-model="name" type="text" name="name" placeholder="Введите ФИО..." class="form-control" id="name">
         <input v-model="telNumber" type="tel" name="telNumber" placeholder="Введите номер телефона..." class="form-control" id="telNumber">
         <input v-model="address" type="text" name="address" placeholder="Введите адрес..." class="form-control" id="address">
@@ -32,6 +39,7 @@ export default {
     name: "CreateNote",
     data() {
         return {
+            errors: Object,
             name: '',
             telNumber: '',
             address: '',
@@ -44,14 +52,19 @@ export default {
         }
     },
     methods: {
-        onSubmit: function() {
-            axios.post('/create/addClient', {name: this.name, telNumber: this.telNumber,
-                address: this.address, sex: this.sex, brand: this.brand, model: this.model,
-                bodyColor: this.bodyColor, number: this.number, isParkedCar: this.isParkedCar}).then(r => this)
-                .catch(error => {
-                    console.error(error.response.data)
-                }).then();
-
+        onSubmit: function(e) {
+                axios.post('/create/addClient', {name: this.name, telNumber: this.telNumber,
+                    address: this.address, sex: this.sex, brand: this.brand, model: this.model,
+                    bodyColor: this.bodyColor, number: this.number, isParkedCar: this.isParkedCar})
+                    .catch(error => {
+                        alert("Запись не добавлена");
+                        this.errors = (error.response.data.errors);
+                        console.log(error.response.data.errors.length);
+                    }).then(r => {
+                    if(Object.keys(this.errors).length=== 0){
+                        alert("Запись добавлена");
+                    }
+                })
         }
     }
 }
